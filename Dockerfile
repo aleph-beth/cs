@@ -11,13 +11,15 @@ RUN apt-get install -y python3-pip
 
 RUN pip3 install essentia
 RUN pip3 install jupyterlab jupyter[all]
-RUN pip3 install torch===1.6.0 torchvision===0.7.0 -f https://download.pytorch.org/whl/torch_stable.html
+RUN pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio===0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
 
 EXPOSE 8888
 
 RUN adduser --home /home/user  user
 WORKDIR /home/user
-VOLUME /mnt/volume
+VOLUME /home/user
 
+# Set the default command to python3
 USER user
-CMD jupyter notebook --ip=*  --allow-root
+EXPOSE 8888
+CMD ["jupyter-lab", "--ip=*"]
